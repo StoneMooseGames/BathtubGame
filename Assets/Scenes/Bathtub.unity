@@ -759,7 +759,7 @@ MonoBehaviour:
   m_Teleporting:
     m_PersistentCalls:
       m_Calls: []
-  m_TeleportAnchorTransform: {fileID: 238694591}
+  m_TeleportAnchorTransform: {fileID: 453035660}
 --- !u!1 &320778122
 GameObject:
   m_ObjectHideFlags: 0
@@ -1911,7 +1911,7 @@ MonoBehaviour:
   m_Teleporting:
     m_PersistentCalls:
       m_Calls: []
-  m_TeleportAnchorTransform: {fileID: 453035660}
+  m_TeleportAnchorTransform: {fileID: 238694591}
 --- !u!1 &496253441
 GameObject:
   m_ObjectHideFlags: 0
@@ -2475,7 +2475,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4652788527845722309, guid: 0aa9d49cf4f8cb14e8c2ed5a609e201d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.0502043
+      value: -4.050208
       objectReference: {fileID: 0}
     - target: {fileID: 4652788527845722309, guid: 0aa9d49cf4f8cb14e8c2ed5a609e201d, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2483,7 +2483,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4652788527845722309, guid: 0aa9d49cf4f8cb14e8c2ed5a609e201d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 33.794006
+      value: 33.794037
       objectReference: {fileID: 0}
     - target: {fileID: 4652788527845722309, guid: 0aa9d49cf4f8cb14e8c2ed5a609e201d, type: 3}
       propertyPath: m_LocalRotation.w
