@@ -17,17 +17,14 @@ public class ToggleRay : MonoBehaviour
 
     private XRRayInteractor rayInteractor = null;
     private bool isSwitched = false;
+    [SerializeField] private TeleportationProvider provider;        //new
 
     private void Awake()
     {
         rayInteractor = GetComponent<XRRayInteractor>();
-        SwitchInteractors(false); // moved to here
+        SwitchInteractors(false);
     }
 
-    private void Start()
-    {
-        //SwitchInteractors(false);
-    }
 
     public void ActivateRay()
     {
@@ -40,6 +37,49 @@ public class ToggleRay : MonoBehaviour
         if (isSwitched)
             SwitchInteractors(false);
     }
+
+    
+    #region TeleportToRay()  ---> [Added by Nora]
+
+    /*
+    public void TeleportToRay()
+    {
+
+        // if Ray is not on:
+        if (!isSwitched)
+        { return; }
+
+
+
+        // if ray is on BUT is not collided with a 3D object
+        if (!rayInteractor.TryGetCurrent3DRaycastHit(out RaycastHit hit))
+        { return; }
+
+
+
+        // If ray is on, and is colliding with an object WITHOUT a "Teleport" tag:
+        if (!hit.collider.CompareTag("Teleport"))
+        { return; }
+
+
+
+        else
+        {
+            TeleportRequest request = new TeleportRequest()
+            {
+                destinationPosition = hit.point,
+                //destinationRotation = ,
+
+            };
+
+            provider.QueueTeleportRequest(request);
+        }
+
+    }
+
+    */
+    #endregion
+
 
     private bool TouchingObject()
     {
