@@ -111,7 +111,7 @@ GameObject:
   - component: {fileID: 5562955602757949939}
   - component: {fileID: 8621690026534129297}
   m_Layer: 0
-  m_Name: Barrel
+  m_Name: BarrelCylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -453,7 +453,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7015512324785750150}
+      - m_Target: {fileID: 8521196471503347266}
         m_TargetAssemblyTypeName: Turret, Assembly-CSharp
         m_MethodName: FireTurret
         m_Mode: 1
@@ -734,7 +734,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4066146869312210002}
   m_Layer: 0
-  m_Name: FiringPoint
+  m_Name: TurretMuzzle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -765,7 +765,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2592415721550863867}
   m_Layer: 0
-  m_Name: tiltPoint
+  m_Name: Barrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1105,7 +1105,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7015512324785750150}
+      - m_Target: {fileID: 8521196471503347266}
         m_TargetAssemblyTypeName: Turret, Assembly-CSharp
         m_MethodName: TiltTurret
         m_Mode: 1
@@ -1261,7 +1261,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9146127363218574775}
-  - component: {fileID: 7015512324785750150}
+  - component: {fileID: 8521196471503347266}
   m_Layer: 0
   m_Name: Turret
   m_TagString: Untagged
@@ -1288,7 +1288,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7015512324785750150
+--- !u!114 &8521196471503347266
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1297,7 +1297,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7672116312248394570}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 508481e1d01d9ae4da079fce22184dcf, type: 3}
+  m_Script: {fileID: 11500000, guid: 976d900397ada6b4ba38a15eda5c19ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ammoCount: 0
@@ -1306,9 +1306,9 @@ MonoBehaviour:
   turretRotation: {x: 0, y: 0, z: 0, w: 0}
   turretBase: {fileID: 5143827905968957039}
   barrel: {fileID: 5076073425306880649}
-  ammo: {fileID: 0}
-  tiltDirection: 0
-  rotateDirection: 0
+  ammo: {fileID: 7677385952856132239, guid: c49af2036aa96ec44aab422df4764ca9, type: 3}
+  tiltDirection: 1
+  rotateDirection: 1
   firingPoint: {fileID: 4066146869312210002}
 --- !u!1 &8162216787507453111
 GameObject:
@@ -1432,7 +1432,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7015512324785750150}
+      - m_Target: {fileID: 8521196471503347266}
         m_TargetAssemblyTypeName: Turret, Assembly-CSharp
         m_MethodName: ReloadTurret
         m_Mode: 1
@@ -1701,7 +1701,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7015512324785750150}
+      - m_Target: {fileID: 8521196471503347266}
         m_TargetAssemblyTypeName: Turret, Assembly-CSharp
         m_MethodName: RotateTurret
         m_Mode: 1
