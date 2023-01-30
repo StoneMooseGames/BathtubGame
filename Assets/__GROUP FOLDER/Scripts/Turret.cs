@@ -1,24 +1,49 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class Turret : MonoBehaviour
 {
-
-    public int ammoCount = 0;
-    public int maxAmmoCount = 10;
+    [Header("General")]
+    public GameObject infoScreen;
     public Quaternion tilt;
     public Quaternion turretRotation;
     public GameObject turretBase;
     public GameObject barrel;
-    public GameObject ammo;
     public int tiltDirection;
     public int rotateDirection;
     public Transform firingPoint;
+    public float firingForce;
+    public float tiltSpeed;
+    public float rotateSpeed;
+    [Header("Buttons")]
+    public Button tiltButton;
+    public Button rotateButton;
+    [Header("Ammo")]
+    public int ammoCount = 0;
+    public int maxAmmoCount = 10;
+    public GameObject ammo;
+    [Header("Sounds")]
+    public AudioClip turretRotationSound;
+    public AudioClip turretTiltSound;
+    public AudioClip turretFireSound;
+    public AudioClip turretReloadSound;
     
-    
+    bool isRotating;
+    bool isTilting;
+
+    GameObject leftController;
+    GameObject rightController;
+
     // Start is called before the first frame update
 
+    private void Awake()
+    {
+        leftController = GameObject.Find("LeftHand Controller");
+        rightController = GameObject.Find("RightHand Controller");
+    }
     private void Start()
     {
         tilt.eulerAngles = new Vector3(0.5f, 0, 0);
@@ -34,6 +59,15 @@ public class Turret : MonoBehaviour
 
     private void Update()
     {
+        if (isRotating)
+        {
+            RotateTurret();
+        }
+        if (isTilting)
+        {
+            TiltTurret();
+        }
+
         
 
     }
@@ -41,42 +75,83 @@ public class Turret : MonoBehaviour
     {
         if(ammoCount > 0)
         {
-            Debug.Log("Fire Turret");
+            PlayTurretSound(turretFireSound);
+            GameObject newBullet = Instantiate(ammo, firingPoint.transform);
+            newBullet.GetComponent<Rigidbody>().AddForce(firingPoint.transform.forward.normalized * firingForce );
+                        
         }
+        
     }
 
-    public void RotateTurret()
+    void RotateTurret()
     {
-        float turnByAmount = 0.1f;
-        turretRotation.eulerAngles += new Vector3(0, turnByAmount * rotateDirection, 0);
-        tilt.eulerAngles += new Vector3(0, turnByAmount * rotateDirection, 0);
+        
+        turretRotation.eulerAngles += new Vector3(0, rotateSpeed * rotateDirection, 0);
+        tilt.eulerAngles += new Vector3(0, rotateSpeed * rotateDirection, 0);
         turretBase.transform.rotation = turretRotation;
         barrel.transform.rotation = tilt;
-
+       
+        
     }
 
-    public void TiltTurret()
+    void TiltTurret()
     {
-        float tiltByAmount = 0.1f;
-        tilt.eulerAngles += new Vector3(tiltByAmount * tiltDirection, 0, 0);
+
+        if (tilt.eulerAngles.x > 55 || tilt.eulerAngles.x < 0) tiltDirection *= -1;    
+            
+        tilt.eulerAngles += new Vector3(tiltSpeed * tiltDirection, 0, 0);
         barrel.transform.rotation = tilt;
+         
+        
     }
 
     public void ReloadTurret()
     {
         ammoCount = maxAmmoCount;
+        PlayTurretSound(turretReloadSound);
         //Wait Timer here, maybe 5 sek?
     }
 
-    public void SetTilttDirection(int direction) //this can be -1 or 1(If zero is used turret wont tilt
+   void PlayTurretSound(AudioClip audioclip)
     {
-        tiltDirection = direction;
+        AudioSource turretSource = this.gameObject.GetComponent<AudioSource>();
+        turretSource.clip = audioclip;
+        turretSource.Play();
+
     }
 
-    public void SetRotateDirection(int direction)
+    public void ToggleRotate()
     {
-        rotateDirection = direction;
+        if (isRotating)
+        {
+            rotateButton.GetComponent<Image>().color = Color.red;
+            PlayTurretSound(turretRotationSound);
+        }
+        else
+        {
+            this.gameObject.GetComponent<AudioSource>().Stop();
+            rotateButton.GetComponent<Image>().color = Color.white;
+        }
+            
+            
+        
+        isRotating = !isRotating;
     }
 
-   
+    public void ToggleTilting()
+    {
+        if (isTilting)
+        {
+            tiltButton.GetComponent<Image>().color = Color.red;
+            PlayTurretSound(turretTiltSound);
+        }
+        else
+        {
+            tiltButton.GetComponent<Image>().color = Color.white;
+            this.gameObject.GetComponent<AudioSource>().Stop();
+        }
+        
+        isTilting = !isTilting;
+    }
+       
 }
