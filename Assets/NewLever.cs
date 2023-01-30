@@ -1,17 +1,18 @@
-﻿using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.XR.Interaction.Toolkit;
 
-/// <summary>
-/// An interactable lever that snaps into an on or off position by a direct interactor
-/// </summary>
-public class XRLever : XRBaseInteractable
+public class NewLever : XRBaseInteractable
 {
     [Tooltip("The object that's grabbed and manipulated")]
     public Transform handle = null;
 
     [Tooltip("The initial value of the lever")]
-    public bool defaultValue = false;
+    public int defaultValue = 1;
+
+
 
     // When the lever is activated
     public UnityEvent OnLeverActivate = new UnityEvent();
@@ -19,7 +20,10 @@ public class XRLever : XRBaseInteractable
     // When the lever is deactivated
     public UnityEvent OnLeverDeactivate = new UnityEvent();
 
-    public bool Value { get; private set; } = false;
+
+
+    //public bool Value { get; private set; } = false;
+    public int Value { get; private set; } = 1;
 
     private XRBaseInteractor selectInteractor = null;
 
@@ -85,8 +89,8 @@ public class XRLever : XRBaseInteractable
         XRBaseInteractor interactor = eventArgs.interactor;
         bool isOn = InOnPosition(interactor.transform.position);
 
-        FindSnapDirection(isOn);
-        SetValue(isOn);
+        FindSnapDirection(defaultValue);
+        SetValue(defaultValue);
     }
 
     private bool InOnPosition(Vector3 interactorPosition)
@@ -95,17 +99,40 @@ public class XRLever : XRBaseInteractable
         return (interactorPosition.z > 0);
     }
 
-    private void FindSnapDirection(bool isOn)
+    private void FindSnapDirection(int isOn)
     {
-        handle.forward = isOn ? transform.forward : -transform.forward;
-        //handle.forward = new Vector3(30, 180, 0);
+        //handle.forward = isOn ? transform.forward : -transform.forward;
+        handle.forward = true ? transform.forward : -transform.forward;
+        
     }
 
-    private void SetValue(bool isOn)
+    private void SetValue(int isOn)
     {
         Value = isOn;
 
+        /*
         if (Value)
+        {
+            OnLeverActivate.Invoke();
+        }
+        else
+        {
+            OnLeverDeactivate.Invoke();
+        }*/
+
+        if (Value == 4)
+        {
+            OnLeverActivate.Invoke();
+        }
+        else if (Value == 3)
+        {
+            OnLeverActivate.Invoke();
+        }
+        else if (Value == 2)
+        {
+            OnLeverActivate.Invoke();
+        }
+        else if (Value == 1)
         {
             OnLeverActivate.Invoke();
         }
@@ -115,3 +142,4 @@ public class XRLever : XRBaseInteractable
         }
     }
 }
+
