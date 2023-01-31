@@ -75,7 +75,7 @@ public class XRLever : XRBaseInteractable
         direction = transform.InverseTransformDirection(direction);
 
         direction.x = 0;
-        direction.y = Mathf.Clamp(direction.y, 0, 1);
+        direction.y = Mathf.Clamp(direction.y, 0, 1);       
 
         return direction;
     }
@@ -84,6 +84,7 @@ public class XRLever : XRBaseInteractable
     {
         XRBaseInteractor interactor = eventArgs.interactor;
         bool isOn = InOnPosition(interactor.transform.position);
+        Debug.Log(interactor);
 
         FindSnapDirection(isOn);
         SetValue(isOn);
@@ -98,7 +99,6 @@ public class XRLever : XRBaseInteractable
     private void FindSnapDirection(bool isOn)
     {
         handle.forward = isOn ? transform.forward : -transform.forward;
-        //handle.forward = new Vector3(30, 180, 0);
     }
 
     private void SetValue(bool isOn)

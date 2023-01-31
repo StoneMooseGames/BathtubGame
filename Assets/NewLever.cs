@@ -6,33 +6,31 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class NewLever : XRBaseInteractable
 {
-    [Tooltip("The object that's grabbed and manipulated")]
+    
     public Transform handle = null;
 
-    [Tooltip("The initial value of the lever")]
     public int defaultValue = 1;
-
-
-
-    // When the lever is activated
-    public UnityEvent OnLeverActivate = new UnityEvent();
-
-    // When the lever is deactivated
-    public UnityEvent OnLeverDeactivate = new UnityEvent();
-
-
-
-    //public bool Value { get; private set; } = false;
     public int Value { get; private set; } = 1;
+
+
+    public Transform[] snapPositions;
+
+
+    public UnityEvent OnLeverReverse = new UnityEvent();
+    public UnityEvent OnLeverStop = new UnityEvent();
+    public UnityEvent OnLeverSpeed1 = new UnityEvent();
+
 
     private XRBaseInteractor selectInteractor = null;
 
+
     private void Start()
     {
-        FindSnapDirection(defaultValue);
+        FindSnapPosition(defaultValue);
         SetValue(defaultValue);
     }
 
+    #region OTHER
     protected override void OnEnable()
     {
         base.OnEnable();
@@ -59,39 +57,16 @@ public class NewLever : XRBaseInteractable
         selectInteractor = null;
     }
 
-    public override void ProcessInteractable(XRInteractionUpdateOrder.UpdatePhase updatePhase)
-    {
-        base.ProcessInteractable(updatePhase);
-
-        if (updatePhase == XRInteractionUpdateOrder.UpdatePhase.Dynamic)
-        {
-            if (isSelected)
-            {
-                Vector3 lookDirection = GetLookDirection();
-                handle.forward = transform.TransformDirection(lookDirection);
-            }
-        }
-    }
-
-    private Vector3 GetLookDirection()
-    {
-        Vector3 direction = selectInteractor.transform.position - handle.position;
-        direction = transform.InverseTransformDirection(direction);
-
-        direction.x = 0;
-        direction.y = Mathf.Clamp(direction.y, 0, 1);
-
-        return direction;
-    }
 
     private void ApplyValue(SelectExitEventArgs eventArgs)
     {
         XRBaseInteractor interactor = eventArgs.interactor;
         bool isOn = InOnPosition(interactor.transform.position);
 
-        FindSnapDirection(defaultValue);
-        SetValue(defaultValue);
+        FindSnapPosition(isOn);
+        SetValue(isOn);
     }
+
 
     private bool InOnPosition(Vector3 interactorPosition)
     {
@@ -99,10 +74,30 @@ public class NewLever : XRBaseInteractable
         return (interactorPosition.z > 0);
     }
 
-    private void FindSnapDirection(int isOn)
+    #endregion
+
+    private void FindSnapPosition(int isOn)
     {
-        //handle.forward = isOn ? transform.forward : -transform.forward;
-        handle.forward = true ? transform.forward : -transform.forward;
+        var shortestDistance = Vector3.Distance(snapPositions[0].position, handle.transform.position);
+        var bestSnap = snapPositions[0];
+
+
+        foreach(var snapPosition in snapPositions)
+        {
+
+            // Distance between lever and snap position
+            var distance = Vector3.Distance(snapPosition.position, handle.transform.position);
+
+
+            if (distance < shortestDistance)
+            {
+                shortestDistance = distance;
+                bestSnap = snapPosition;
+            }
+
+        }
+
+        handle.transform.rotation = bestSnap.rotation;
         
     }
 
@@ -110,36 +105,25 @@ public class NewLever : XRBaseInteractable
     {
         Value = isOn;
 
-        /*
-        if (Value)
-        {
-            OnLeverActivate.Invoke();
-        }
-        else
-        {
-            OnLeverDeactivate.Invoke();
-        }*/
 
-        if (Value == 4)
+
+        if (Value == 0)
         {
-            OnLeverActivate.Invoke();
+            OnLeverReverse.Invoke();
         }
-        else if (Value == 3)
-        {
-            OnLeverActivate.Invoke();
-        }
-        else if (Value == 2)
-        {
-            OnLeverActivate.Invoke();
-        }
+
+
         else if (Value == 1)
         {
-            OnLeverActivate.Invoke();
+            OnLeverStop.Invoke();
         }
+
+
         else
         {
-            OnLeverDeactivate.Invoke();
+            OnLeverSpeed1.Invoke();
         }
     }
+    
 }
 
