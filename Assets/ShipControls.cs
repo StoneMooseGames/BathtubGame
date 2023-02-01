@@ -113,5 +113,10 @@ public class ShipControls : MonoBehaviour
             player.transform.SetParent(null);
     }
 
+    public void RotateShip(float direction)
+    {
+
+    }
+
 }
 
