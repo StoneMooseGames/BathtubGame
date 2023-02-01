@@ -9,7 +9,7 @@ public class NewLever : XRBaseInteractable
     
     public Transform handle = null;
 
-    public int defaultValue = 1;
+    //public int defaultValue = 1;
     public int Value { get; private set; } = 1;
 
 
@@ -26,8 +26,8 @@ public class NewLever : XRBaseInteractable
 
     private void Start()
     {
-        FindSnapPosition(defaultValue);
-        SetValue(defaultValue);
+        FindSnapPosition();
+        SetValue(true);
     }
 
     #region OTHER
@@ -62,9 +62,12 @@ public class NewLever : XRBaseInteractable
     {
         XRBaseInteractor interactor = eventArgs.interactor;
         bool isOn = InOnPosition(interactor.transform.position);
-
-        FindSnapPosition(isOn);
-        SetValue(isOn);
+        if (isOn)
+        {
+            FindSnapPosition();
+            SetValue(isOn);
+        }
+       
     }
 
 
@@ -76,7 +79,7 @@ public class NewLever : XRBaseInteractable
 
     #endregion
 
-    private void FindSnapPosition(int isOn)
+    private void FindSnapPosition()
     {
         var shortestDistance = Vector3.Distance(snapPositions[0].position, handle.transform.position);
         var bestSnap = snapPositions[0];
@@ -101,19 +104,16 @@ public class NewLever : XRBaseInteractable
         
     }
 
-    private void SetValue(int isOn)
+    private void SetValue(bool isOn)
     {
-        Value = isOn;
-
-
-
-        if (Value == 0)
+      
+        if (!isOn)
         {
             OnLeverReverse.Invoke();
         }
 
 
-        else if (Value == 1)
+        else if (isOn)
         {
             OnLeverStop.Invoke();
         }
