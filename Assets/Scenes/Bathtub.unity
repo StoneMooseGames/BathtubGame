@@ -8749,6 +8749,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Turret
       objectReference: {fileID: 0}
+    - target: {fileID: 8521196471503347266, guid: f2b37751158629b4a95f593f6c8d539e, type: 3}
+      propertyPath: barrel
+      value: 
+      objectReference: {fileID: 1610016734}
     - target: {fileID: 9146127363218574775, guid: f2b37751158629b4a95f593f6c8d539e, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -12351,6 +12355,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 9c1a53f613d133a4cb28665b6a750a3a, type: 3}
   m_PrefabInstance: {fileID: 1609139300}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1610016734 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7956464353585800828, guid: f2b37751158629b4a95f593f6c8d539e, type: 3}
+  m_PrefabInstance: {fileID: 1166613969}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1613184871
 GameObject:
