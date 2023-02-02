@@ -47,6 +47,7 @@ public class Turret : MonoBehaviour
     }
     private void Start()
     {
+        
         tilt.eulerAngles = new Vector3(-45, 0, 0);
         turretRotation.eulerAngles = new Vector3(-90, 0, 0);
         barrel.transform.rotation = tilt;
@@ -111,6 +112,7 @@ public class Turret : MonoBehaviour
     {
         ammoCount = maxAmmoCount;
         PlayTurretSound(turretReloadSound);
+
         StartCoroutine(WaitTimer(5));
     }
 
