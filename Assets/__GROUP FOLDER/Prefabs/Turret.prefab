@@ -395,7 +395,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
+          m_IntArgument: -1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -1159,7 +1159,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7582242092973009347
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1676,7 +1676,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: -1
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -2229,7 +2229,7 @@ MonoBehaviour:
   tiltDirection: 0
   rotateDirection: 0
   firingPoint: {fileID: 4066146869312210002}
-  firingForce: 3000
+  firingForce: 2000
   tiltSpeed: 0.1
   rotateSpeed: 0.1
   tiltButton: {fileID: 7918621380170601527}
@@ -2241,6 +2241,7 @@ MonoBehaviour:
   turretTiltSound: {fileID: 8300000, guid: 1c9278a2231a4d64f8902d78939ff0d6, type: 3}
   turretFireSound: {fileID: 8300000, guid: c8fbe37de261b3447bd1b73d1a12aab4, type: 3}
   turretReloadSound: {fileID: 8300000, guid: ed41eac4854d26a4695d4848e26ce493, type: 3}
+  firingEffect: {fileID: 1025285306637258, guid: d8f0099df63275647a8bcf646df1ca00, type: 3}
 --- !u!82 &793363609
 AudioSource:
   m_ObjectHideFlags: 0

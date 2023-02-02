@@ -6,7 +6,9 @@ public class Ammo : MonoBehaviour
 {
     public int secondsToDestroy;
     Transform startRotation;
-    public Transform turretMuzzle;
+    Transform turretMuzzle;
+    public ParticleSystem hitOnWaterEffect;
+    public ParticleSystem hitOnDuckEffect;
     
     private void Awake()
     {
@@ -29,6 +31,12 @@ public class Ammo : MonoBehaviour
         {
             Destroy(this.gameObject);
             Destroy(collision.gameObject);
+            hitOnDuckEffect.Play();
+        }
+
+        if (collision.gameObject.tag == "water")
+        {
+            hitOnWaterEffect.Play();
         }
 
     }

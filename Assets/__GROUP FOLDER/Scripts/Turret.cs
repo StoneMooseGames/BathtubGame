@@ -31,6 +31,8 @@ public class Turret : MonoBehaviour
     public AudioClip turretTiltSound;
     public AudioClip turretFireSound;
     public AudioClip turretReloadSound;
+    [Header("Effects")]
+    public GameObject firingEffect;
     
     bool isRotating;
     bool isTilting;
@@ -44,6 +46,7 @@ public class Turret : MonoBehaviour
     {
         leftController = GameObject.Find("LeftHand Controller");
         rightController = GameObject.Find("RightHand Controller");
+        GameObject.Find("RotateRight").GetComponent<Button>().GetComponent<Image>().color = Color.red;
     }
     private void Start()
     {
@@ -81,7 +84,8 @@ public class Turret : MonoBehaviour
             PlayTurretSound(turretFireSound);
             GameObject newBullet = Instantiate(ammo, firingPoint.transform);
             newBullet.GetComponent<Rigidbody>().AddForce(firingPoint.transform.forward.normalized * firingForce );
-                        
+            Instantiate(firingEffect);
+            
         }
         
     }
@@ -159,6 +163,10 @@ public class Turret : MonoBehaviour
 
     public void SetRotationDirection(int value)
     {
+        GameObject.Find("RotateRight").GetComponent<Button>().GetComponent<Image>().color = Color.white;
+        GameObject.Find("RotateLeft").GetComponent<Button>().GetComponent<Image>().color = Color.white;
+        if (value == 1) GameObject.Find("RotateRight").GetComponent<Button>().GetComponent<Image>().color = Color.red;
+        if (value == -1) GameObject.Find("RotateLeft").GetComponent<Button>().GetComponent<Image>().color = Color.red;
         rotateDirection = value;
     }
 
