@@ -4,36 +4,42 @@ using UnityEngine;
 
 public class ShipControls : MonoBehaviour
 {
+    [Header("General")]
     public float speed = 1;
+    public bool engineOn = false;
+
+    [Header("Ship")]
     public GameObject ship;
     public Rigidbody shipRigidbody;
     public Transform shipParent;
 
-    public bool engineOn = false;
+    [Header("Wheel")]
+    public GameObject wheel;
+    public Rigidbody wheelRigidbody;
 
+
+    [Header("Player")]
     public GameObject player;
     public bool playerIsChild = true;
 
+    [Header("Sounds")]
     public AudioSource engineOnSound;
     public AudioSource engineOffSound;
-
     public AudioSource ocean1;
     public AudioSource ocean2;
     public AudioSource ocean3;
 
-    
 
-    private void Awake()
-    {
-        
-    }
 
     void Start()
     {
+        wheelRigidbody = wheel.GetComponent<Rigidbody>();
         shipRigidbody = ship.GetComponent<Rigidbody>();
         shipParent = ship.transform;
 
         TogglePlayerChildToShip(true);
+
+        //RotateShip(45);
     }
 
 
@@ -57,7 +63,20 @@ public class ShipControls : MonoBehaviour
         else
         {
             //Move the boat
-            ship.transform.position += transform.forward * speed;
+            //ship.transform.position += transform.forward * speed;
+            //shipRigidbody.AddForce(ship.transform.forward * speed);
+            //shipRigidbody.velocity += transform.forward * speed;
+            //ship.transform.position = new Vector3(0, 0, speed) * Time.deltaTime;
+            //ship.transform.Translate(Vector3.forward * speed * Time.deltaTime);
+            //ship.transform.position += transform.forward * speed * Time.deltaTime;
+            //shipRigidbody.velocity += transform.forward * speed;
+            //shipRigidbody.velocity += new Vector3(0, speed, 0);
+
+            shipRigidbody.AddForce(ship.transform.forward * speed);
+            wheelRigidbody.AddForce(wheel.transform.forward * speed);
+
+
+
             #region shipRigidbody.velocity += transform.forward * speed;
             //shipRigidbody.velocity += transform.forward * speed;
             #endregion
@@ -113,9 +132,9 @@ public class ShipControls : MonoBehaviour
             player.transform.SetParent(null);
     }
 
-    public void RotateShip(float direction)
+    public void RotateShip(float amount)
     {
-
+        ship.transform.Rotate(0, amount, 0);
     }
 
 }
