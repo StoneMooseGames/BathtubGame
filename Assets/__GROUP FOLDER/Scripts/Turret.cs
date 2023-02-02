@@ -8,6 +8,7 @@ public class Turret : MonoBehaviour
 {
     [Header("General")]
     public GameObject infoScreen;
+    public GameObject reLoadScreenText;
     public Quaternion tilt;
     public Quaternion turretRotation;
     public GameObject turretBase;
@@ -46,13 +47,14 @@ public class Turret : MonoBehaviour
     }
     private void Start()
     {
-        tilt.eulerAngles = new Vector3(0.5f, 0, 0);
-        turretRotation.eulerAngles = new Vector3(0, 0.5f, 0);
+        tilt.eulerAngles = new Vector3(-45, 0, 0);
+        turretRotation.eulerAngles = new Vector3(-90, 0, 0);
         barrel.transform.rotation = tilt;
         turretBase.transform.rotation = turretRotation;
         ammoCount = maxAmmoCount;
         tiltDirection = 1;
         rotateDirection = 1;
+        
         
 
     }
@@ -97,7 +99,7 @@ public class Turret : MonoBehaviour
     void TiltTurret()
     {
 
-        if (tilt.eulerAngles.x > 55 || tilt.eulerAngles.x < 0) tiltDirection *= -1;    
+        if (tilt.eulerAngles.x > 80 || tilt.eulerAngles.x < 10) tiltDirection *= -1;    
             
         tilt.eulerAngles += new Vector3(tiltSpeed * tiltDirection, 0, 0);
         barrel.transform.rotation = tilt;
@@ -109,7 +111,7 @@ public class Turret : MonoBehaviour
     {
         ammoCount = maxAmmoCount;
         PlayTurretSound(turretReloadSound);
-        //Wait Timer here, maybe 5 sek?
+        StartCoroutine(WaitTimer(5));
     }
 
    void PlayTurretSound(AudioClip audioclip)
@@ -122,6 +124,7 @@ public class Turret : MonoBehaviour
 
     public void ToggleRotate()
     {
+        isRotating = !isRotating;
         if (isRotating)
         {
             rotateButton.GetComponent<Image>().color = Color.red;
@@ -132,14 +135,12 @@ public class Turret : MonoBehaviour
             this.gameObject.GetComponent<AudioSource>().Stop();
             rotateButton.GetComponent<Image>().color = Color.white;
         }
-            
-            
-        
-        isRotating = !isRotating;
+    
     }
 
     public void ToggleTilting()
     {
+        isTilting = !isTilting;
         if (isTilting)
         {
             tiltButton.GetComponent<Image>().color = Color.red;
@@ -151,7 +152,17 @@ public class Turret : MonoBehaviour
             this.gameObject.GetComponent<AudioSource>().Stop();
         }
         
-        isTilting = !isTilting;
+        
+    }
+
+    public void SetRotationDirection(int value)
+    {
+        rotateDirection = value;
+    }
+
+    IEnumerator WaitTimer(int seconds)
+    {
+        yield return new WaitForSeconds(seconds);
     }
        
 }
