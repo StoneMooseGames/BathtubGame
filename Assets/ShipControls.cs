@@ -89,6 +89,7 @@ public class ShipControls : MonoBehaviour
 
     public void ToggleEngine(bool engine)
     {
+        Debug.Log(engine);
         engineOn = engine;
         PlaySound(engine);
     }

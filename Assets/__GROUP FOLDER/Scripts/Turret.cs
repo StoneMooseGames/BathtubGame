@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using TMPro;
 
 public class Turret : MonoBehaviour
 {
@@ -25,6 +26,7 @@ public class Turret : MonoBehaviour
     [Header("Ammo")]
     public int ammoCount = 0;
     public int maxAmmoCount = 10;
+    public TMP_Text ammoCountText;
     public GameObject ammo;
     [Header("Sounds")]
     public AudioClip turretRotationSound;
@@ -59,12 +61,14 @@ public class Turret : MonoBehaviour
         tiltDirection = 1;
         rotateDirection = 1;
         
-        
+       
+
 
     }
 
     private void Update()
     {
+        ammoCountText.SetText("Ammo Count: " + ammoCount.ToString());
         if (isRotating)
         {
             RotateTurret();
@@ -84,8 +88,8 @@ public class Turret : MonoBehaviour
             PlayTurretSound(turretFireSound);
             GameObject newBullet = Instantiate(ammo, firingPoint.transform);
             newBullet.GetComponent<Rigidbody>().AddForce(firingPoint.transform.forward.normalized * firingForce );
-            Instantiate(firingEffect);
-            
+            Instantiate(firingEffect,firingPoint);
+            ammoCount--;
         }
         
     }
@@ -104,7 +108,7 @@ public class Turret : MonoBehaviour
     void TiltTurret()
     {
 
-        if (tilt.eulerAngles.x > 80 || tilt.eulerAngles.x < 10) tiltDirection *= -1;    
+        if (tilt.eulerAngles.x > 360 || tilt.eulerAngles.x < 300) tiltDirection *= -1;    
             
         tilt.eulerAngles += new Vector3(tiltSpeed * tiltDirection, 0, 0);
         barrel.transform.rotation = tilt;

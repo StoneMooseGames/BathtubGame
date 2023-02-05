@@ -7,8 +7,8 @@ public class Ammo : MonoBehaviour
     public int secondsToDestroy;
     Transform startRotation;
     Transform turretMuzzle;
-    public ParticleSystem hitOnWaterEffect;
-    public ParticleSystem hitOnDuckEffect;
+    public GameObject hitOnWaterEffect;
+    public GameObject hitOnDuckEffect;
     
     private void Awake()
     {
@@ -25,18 +25,20 @@ public class Ammo : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("Collided with: " + collision.gameObject.name);
+        Debug.Log("Collided with: " + collision.gameObject.tag);
 
         if(collision.gameObject.tag == "Destructible")
         {
             Destroy(this.gameObject);
             Destroy(collision.gameObject);
-            hitOnDuckEffect.Play();
+            Instantiate(hitOnDuckEffect, this.gameObject.transform);
         }
 
         if (collision.gameObject.tag == "water")
         {
-            hitOnWaterEffect.Play();
+            Destroy(this.gameObject);
+            GameObject newSplash =  Instantiate(hitOnWaterEffect,this.gameObject.transform);
+            Destroy(newSplash, 3);
         }
 
     }

@@ -45,7 +45,7 @@ public class SteeringWheelControl : MonoBehaviour
     {
         wheelRotation = wheel.transform.localRotation.eulerAngles.x;
 
-        Debug.Log(wheel.transform.localRotation.eulerAngles.x);
+        //Debug.Log(wheel.transform.localRotation.eulerAngles.x);
 
         if (wheelRotation <= 5)
             return;
